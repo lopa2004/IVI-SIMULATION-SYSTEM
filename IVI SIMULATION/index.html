@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cabin Relay — IVI Signal-Flow Studio</title>
+<link rel="stylesheet" href="css/theme.css">
+</head>
+<body>
+<header class="masthead">
+  <div class="brand">
+    <span class="brand-mark" aria-hidden="true">CR</span>
+    <div>
+      <h1>Cabin Relay</h1>
+      <p>In-vehicle infotainment · signal-flow studio</p>
+    </div>
+  </div>
+  <p class="pill"><span class="pill-dot" aria-hidden="true"></span>System online</p>
+</header>
+
+<div class="workspace">
+  <aside class="deck" aria-labelledby="deck-h">
+    <h2 id="deck-h" class="label">Scenario deck</h2>
+    <ol class="deck-list" id="deck-list"></ol>
+    <button type="button" class="btn-reset" id="reset-btn">⟲ Reset to idle</button>
+    <p class="deck-note">Controls lock while a signal is travelling, so runs never overlap.</p>
+  </aside>
+
+  <main class="board">
+    <section class="card stage" aria-labelledby="map-h">
+      <div class="card-head">
+        <h2 id="map-h">Signal map</h2>
+        <p class="ticker" id="ticker" role="status" data-tone="idle">System idle</p>
+      </div>
+      <figure class="map">
+        <div class="map-scroll" id="map-mount"></div>
+        <figcaption>
+          <ul class="key">
+            <li><i class="sw sw-plain"></i>Component</li>
+            <li><i class="sw sw-active"></i>Processing</li>
+            <li><i class="sw sw-done"></i>Completed path</li>
+            <li><i class="sw sw-paused"></i>Paused</li>
+            <li><i class="sw sw-ext"></i>External</li>
+            <li><i class="sw sw-veh"></i>Vehicle side</li>
+          </ul>
+        </figcaption>
+      </figure>
+    </section>
+
+    <div class="lower">
+      <section class="card" aria-labelledby="state-h">
+        <div class="card-head"><h2 id="state-h">Live state</h2></div>
+        <ul class="gauges">
+          <li><span>Mode</span><b data-gauge="mode"></b></li>
+          <li><span>Media</span><b data-gauge="media"></b></li>
+          <li><span>Navigation</span><b data-gauge="nav"></b></li>
+          <li><span>Projection</span><b data-gauge="proj"></b></li>
+          <li><span>Call</span><b data-gauge="call"></b></li>
+          <li><span>Vehicle network</span><b class="t-ok">Connected</b></li>
+          <li><span>GPS</span><b class="t-ok">Available</b></li>
+        </ul>
+      </section>
+
+      <section class="card" aria-labelledby="log-h">
+        <div class="card-head">
+          <h2 id="log-h">Journal</h2>
+          <button type="button" class="btn-link" id="clear-btn">Clear</button>
+        </div>
+        <ol class="journal" id="journal" role="log" aria-live="polite"></ol>
+      </section>
+    </div>
+  </main>
+</div>
+
+<section class="about">
+  <details open>
+    <summary>How the signal travels</summary>
+    <ol>
+      <li>The driver touches, speaks to, or presses the HMI.</li>
+      <li>The controller (middleware) receives every command and routes it.</li>
+      <li>Media, Navigation and Projection services do the feature work.</li>
+      <li>Navigation merges two independent sources: live GPS and stored map data.</li>
+      <li>Audio HAL and Display HAL turn service data into speaker and screen output.</li>
+      <li>The CAN/LIN vehicle network links the controller to the vehicle ECUs.</li>
+      <li>A paired smartphone can project Android Auto / CarPlay through the HMI.</li>
+    </ol>
+  </details>
+  <details>
+    <summary>About this project</summary>
+    <p>Conceptual IVI architecture with a browser-based simulation (Module 6). Built with plain HTML, CSS, JavaScript and generated SVG. It runs offline by opening <code>index.html</code>.</p>
+    <p class="fine">Educational only: no real CAN bus, GPS, Android Automotive, HAL or ECU is involved. All events and timestamps are simulated.</p>
+  </details>
+</section>
+<footer class="foot">Cabin Relay · offline, dependency-free</footer>
+
+<script src="js/topology.js"></script>
+<script src="js/store.js"></script>
+<script src="js/diagram.js"></script>
+<script src="js/journal.js"></script>
+<script src="js/scenarios.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
