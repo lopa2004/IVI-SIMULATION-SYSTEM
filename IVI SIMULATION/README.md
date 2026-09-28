@@ -1,4 +1,4 @@
-# Cabin Relay — IVI Signal-Flow Studio
+# 🚗 IVI SIMULATION SYSTEM
 
 Interactive simulation of an in-vehicle infotainment architecture. Open `index.html` (no server, no internet).
 
