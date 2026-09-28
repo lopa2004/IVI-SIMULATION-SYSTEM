@@ -1,62 +1,76 @@
-#  IVI SIMULATION SYSTEM
+# 🔗 IVI Simulation System — Interactive Simulation
 
-### In-Vehicle Infotainment (IVI) System — Interactive Architecture & Signal-Flow Simulation
-
-An interactive browser-based simulation that demonstrates the architecture, communication, and signal flow of an **In-Vehicle Infotainment (IVI) System**.
-
-The project visualizes how the **Driver, Smartphone, IVI HMI, IVI Controller, Media Service, Navigation Service, Projection Service, Hardware Abstraction Layers (HAL), GPS, Map Database, Vehicle Network, and Vehicle ECUs** interact with each other.
-
-The simulation is developed using **HTML, CSS, and Vanilla JavaScript** and can run directly in a modern web browser.
+**In-Vehicle Infotainment (IVI) System Project: Conceptual Architecture + Browser-Based Signal-Flow Simulation**
 
 ---
 
-##  1. Project Overview
+## 1. Project Overview
 
-The **IVI Simulation System** is a browser-based educational simulation of a conceptual automotive **In-Vehicle Infotainment (IVI) architecture**.
+This project is an interactive browser-based simulation of a conceptual **In-Vehicle Infotainment (IVI) System**.
 
-Modern vehicles use infotainment systems to provide features such as:
+It demonstrates how different components of a vehicle infotainment system — including the **Driver, Smartphone, IVI HMI, IVI Controller, Media Service, Navigation Service, Projection Service, GPS Module, Map Database, Hardware Abstraction Layers, Vehicle Network, and Vehicle ECUs** — communicate and exchange data.
 
-- 🎵 Music and media playback
-- 🗺️ Navigation and route guidance
-- 📱 Smartphone connectivity
-- 📺 Information projection
-- ☎️ Incoming call handling
-- 🚘 Vehicle information
-- 📡 Communication with vehicle systems
+Instead of showing only a static architecture diagram, this project allows users to run different scenarios and watch the signal flow through the IVI architecture.
 
-Instead of presenting only a static architecture diagram, this project provides an **interactive signal-flow simulation**.
-
-Users can trigger different scenarios and observe how commands and data travel through different IVI components.
-
-The system also provides a **Live State panel** and an **Event Journal** to show what is happening during each simulation.
+The simulation is developed using **HTML, CSS, and Vanilla JavaScript**. It does not require any external JavaScript framework.
 
 ---
 
-##  2. Project Objective
+## 2. Objective
 
-The main objective of this project is to demonstrate the conceptual architecture and data flow of an automotive **In-Vehicle Infotainment System**.
+The main objective of this project is to provide an interactive representation of an IVI system architecture and demonstrate how commands and data move between different software and vehicle components.
 
-The project helps users understand:
+The simulation demonstrates:
 
-- Driver interaction with the infotainment system
-- HMI and controller communication
-- Media playback architecture
-- Navigation and GPS communication
-- Map database interaction
-- Smartphone projection concepts
-- Hardware Abstraction Layer (HAL)
+- Media playback and audio output
+- Navigation using GPS and map information
+- Route projection to the vehicle display
+- Smartphone interaction
+- Incoming call handling
+- Media interruption and recovery
 - Vehicle network communication
-- CAN/LIN concepts
-- Vehicle ECU interaction
-- Audio output
-- Visual output
-- Cross-feature interaction such as incoming calls interrupting music
+- Live system-state changes
+- Event-based signal-flow visualization
+
+The interactive approach makes it easier to understand how different IVI services work together inside a vehicle infotainment architecture.
 
 ---
 
-##  3. System Architecture
+## 3. Architecture
 
-The IVI architecture follows the general flow:
+The system is organized into three main zones:
+
+### External Devices
+
+Components outside the main IVI system:
+
+- **Driver** — provides touch or voice commands.
+- **Smartphone** — represents smartphone connectivity such as Android Auto / Apple CarPlay concepts.
+
+### IVI System
+
+The main infotainment stack consists of:
+
+- **IVI HMI / Touch Display** — the interface through which the driver interacts with the system.
+- **IVI Controller / Middleware** — receives commands and routes them to the appropriate service.
+- **Media Service** — handles media and audio playback.
+- **Navigation Service** — handles navigation, routing, and location information.
+- **Projection Service** — prepares information for display projection.
+- **Audio HAL** — represents the hardware abstraction layer between the Media Service and physical audio output.
+- **Display HAL** — represents the hardware abstraction layer between projection software and the physical display.
+- **GPS Module** — provides location information to the Navigation Service.
+- **Map Database** — provides stored map information used for navigation.
+- **Vehicle Speakers** — final audio output.
+- **Central Display / HUD** — final visual output.
+
+### Vehicle System
+
+The vehicle side consists of:
+
+- **Vehicle Network (CAN/LIN)** — conceptual communication network between the IVI Controller and vehicle systems.
+- **Vehicle ECUs** — represent electronic control units that provide information such as speed, gear, and other vehicle-state data.
+
+The basic system flow is:
 
 ```text
 Driver / Smartphone
@@ -72,101 +86,9 @@ Driver / Smartphone
       Output
 ```
 
-The **IVI Controller** works as the central communication and routing layer of the system.
-
-It receives commands from the HMI and sends them to the appropriate service.
-
-The system is conceptually divided into:
-
-### External Devices
-
-- Driver
-- Smartphone
-
-### IVI System
-
-- IVI HMI / Touch Display
-- IVI Controller / Middleware
-- Media Service
-- Navigation Service
-- Projection Service
-- Audio HAL
-- Display HAL
-- GPS Module
-- Map Database
-- Vehicle Speakers
-- Central Display / HUD
-
-### Vehicle System
-
-- Vehicle Network (CAN/LIN)
-- Vehicle ECUs
-
 ---
 
-##  4. Architecture Flow
-
-```text
-                         DRIVER
-                    (Touch / Voice)
-                          │
-                          ▼
-                    ┌───────────┐
-                    │  IVI HMI  │
-                    │  Display  │
-                    └─────┬─────┘
-                          │
-                          ▼
-                 ┌─────────────────┐
-                 │ IVI CONTROLLER  │
-                 │ Middleware /    │
-                 │ Routing         │
-                 └───────┬─────────┘
-                         │
-             ┌───────────┼───────────┐
-             │           │           │
-             ▼           ▼           ▼
-       ┌──────────┐ ┌──────────┐ ┌────────────┐
-       │  MEDIA   │ │NAVIGATION│ │ PROJECTION │
-       │ SERVICE  │ │ SERVICE  │ │  SERVICE   │
-       └────┬─────┘ └────┬─────┘ └─────┬──────┘
-            │             ▲             │
-            ▼             │             ▼
-       ┌─────────┐   ┌────┴─────┐  ┌───────────┐
-       │AUDIO HAL│   │ GPS / MAP│  │DISPLAY HAL│
-       └────┬────┘   └──────────┘  └─────┬─────┘
-            │                             │
-            ▼                             ▼
-       ┌─────────┐                 ┌─────────────┐
-       │SPEAKERS │                 │DISPLAY / HUD│
-       └─────────┘                 └─────────────┘
-
-
-               VEHICLE COMMUNICATION
-
-                 IVI CONTROLLER
-                       │
-                       ▼
-               VEHICLE NETWORK
-                  (CAN / LIN)
-                       │
-                       ▼
-                  VEHICLE ECUs
-```
-
----
-
-##  5. Architecture Diagram
-
-The architecture diagram represents the communication between the external devices, IVI software services, hardware abstraction layers, outputs, and vehicle systems.
-
-If the architecture image is stored inside the `docs` folder as `architecture.png`, it will appear below:
-
-![IVI System Architecture](docs/architecture.png)
-
----
-
-##  6. Project Structure
+## 4. Project Structure
 
 ```text
 IVI-SIMULATION-SYSTEM/
@@ -177,103 +99,63 @@ IVI-SIMULATION-SYSTEM/
 ├── css/
 │   └── theme.css
 │
-├── js/
-│   ├── app.js
-│   ├── diagram.js
-│   ├── journal.js
-│   ├── scenarios.js
-│   ├── store.js
-│   └── topology.js
-│
-└── docs/
-    ├── architecture.png
-    └── IVI_Project_Report_Lopamudra_Roy.pdf
+└── js/
+    ├── app.js
+    ├── diagram.js
+    ├── journal.js
+    ├── scenarios.js
+    ├── store.js
+    └── topology.js
 ```
 
 ### File Description
 
-| File | Purpose |
-|---|---|
-| `index.html` | Main application interface and page structure |
-| `css/theme.css` | UI design, layout, responsive styling and visual states |
-| `js/app.js` | Main application logic and scenario execution |
-| `js/diagram.js` | Generates and controls the IVI architecture diagram and animations |
-| `js/journal.js` | Handles the simulation event journal |
-| `js/scenarios.js` | Defines interactive IVI simulation scenarios |
-| `js/store.js` | Handles application state management |
-| `js/topology.js` | Defines architecture nodes, zones and connections |
-| `README.md` | Complete project documentation |
-| `docs/architecture.png` | IVI architecture diagram |
-| `docs/IVI_Project_Report_Lopamudra_Roy.pdf` | Detailed project report |
+- **index.html** — Contains the main page structure and user interface of the IVI simulation.
+
+- **css/theme.css** — Contains the visual theme, layout, component styling, responsive design, and animation states.
+
+- **js/topology.js** — Defines the IVI architecture, including zones, nodes, and connections between different components.
+
+- **js/store.js** — Maintains the application state and stores the current status of different IVI features.
+
+- **js/diagram.js** — Generates and updates the architecture diagram and handles visual signal-flow animation.
+
+- **js/journal.js** — Manages the simulation event journal and displays events generated during scenarios.
+
+- **js/scenarios.js** — Defines the interactive IVI scenarios, their steps, conditions, and resulting state changes.
+
+- **js/app.js** — Main application logic that connects the user interface, scenarios, state, diagram, and event journal.
+
+- **README.md** — Project documentation and instructions.
 
 ---
 
-##  7. Technologies Used
+## 5. Requirements
 
-The project uses:
+To run this project, you need:
 
-- HTML5
-- CSS3
-- Vanilla JavaScript
-- SVG
-- DOM Manipulation
-- Event-driven Programming
-- State Management
-- Git
-- GitHub
+- A modern web browser
+- Google Chrome (recommended), Microsoft Edge, or Mozilla Firefox
+- No external JavaScript framework
+- No special hardware
+- No real vehicle connection
 
-### Core Technology Stack
-
-```text
-HTML
-  ↓
-Page Structure
-
-CSS
-  ↓
-Design + Layout + Animation
-
-JavaScript
-  ↓
-Simulation Logic + State + Events
-
-SVG
-  ↓
-Interactive Architecture Diagram
-```
-
-No external JavaScript framework is required.
+The project is designed as a browser-based educational simulation.
 
 ---
 
-## 💻 8. Requirements
+## 6. How to Run
 
-To run this project, you only need a modern web browser.
+### Option 1 — Run Directly
 
-Recommended browsers:
+1. Download or clone the repository.
+2. Open the `IVI-SIMULATION-SYSTEM` folder.
+3. Locate `index.html`.
+4. Open `index.html` using a modern browser.
+5. The IVI Simulation System will load.
+6. Use the available scenario controls to run the simulation.
 
-- Google Chrome
-- Microsoft Edge
-- Mozilla Firefox
-
-No external software package is required to run the simulation.
-
----
-
-## 🚀 9. How to Run
-
-### Method 1 — Run Directly
-
-1. Download the repository.
-2. Extract the project folder if required.
-3. Open the project folder.
-4. Locate `index.html`.
-5. Open `index.html` using a modern web browser.
-6. The IVI Simulation System will start.
-
----
-
-### Method 2 — Clone from GitHub
+### Option 2 — Clone from GitHub
 
 Clone the repository:
 
@@ -287,36 +169,139 @@ Open the project directory:
 cd IVI-SIMULATION-SYSTEM
 ```
 
-Then open:
-
-```text
-index.html
-```
-
-in your browser.
+Then open `index.html` in your browser.
 
 ---
 
-##  10. Simulation Scenarios
+## 7. How to Demonstrate the Project
 
-The project provides multiple interactive scenarios that demonstrate different IVI operations.
+A simple demonstration sequence can be followed:
 
-### Available Scenarios
+1. **Open the simulator.**  
+   Introduce the major areas of the architecture: Driver/Smartphone, IVI System, and Vehicle System.
 
-| Scenario | Purpose |
+2. **Explain the main signal flow.**
+
+   ```text
+   Driver → IVI HMI → IVI Controller
+   ```
+
+   Explain that the IVI Controller works as the central routing component.
+
+3. **Run Play Music.**
+
+   Explain the signal path:
+
+   ```text
+   Driver
+      ↓
+   IVI HMI
+      ↓
+   IVI Controller
+      ↓
+   Media Service
+      ↓
+   Audio HAL
+      ↓
+   Vehicle Speakers
+   ```
+
+4. **Run Start Navigation.**
+
+   Explain that the Navigation Service receives information from both the GPS Module and Map Database.
+
+5. **Run Project Route.**
+
+   Explain the visual-output path:
+
+   ```text
+   Navigation Service
+          ↓
+   Projection Service
+          ↓
+      Display HAL
+          ↓
+   Central Display / HUD
+   ```
+
+6. **Run Incoming Call while media is playing.**
+
+   Explain how the incoming call interacts with the media feature and causes active media to pause.
+
+7. **Run End Call.**
+
+   Explain how media can resume after the call ends when it was previously interrupted by the call.
+
+8. **Reset the simulation.**
+
+   Return the system to its initial idle state.
+
+---
+
+## 8. Simulation Scenarios
+
+| Button / Scenario | What It Demonstrates |
 |---|---|
-| 🎵 Play Music | Demonstrates media playback signal flow |
-| 🗺️ Start Navigation | Demonstrates navigation using GPS and map information |
-| 📺 Project Route | Demonstrates route projection to the display/HUD |
-| ☎️ Incoming Call | Demonstrates call interruption of active media |
-| ✕ End Call | Demonstrates recovery after the call ends |
-| 🔄 Reset | Returns the simulation to the initial idle state |
+| **Play Music** | Media playback through Media Service → Audio HAL → Vehicle Speakers |
+| **Start Navigation** | Navigation Service using GPS and Map Database information |
+| **Project Route** | Navigation → Projection Service → Display HAL → Display/HUD |
+| **Incoming Call** | Smartphone call interrupting active media playback |
+| **End Call** | Ending the call and restoring the previous media state when required |
+| **Reset** | Returns the complete simulation to its initial idle state |
+
+Each scenario updates the architecture visualization, system state, and event journal.
 
 ---
 
-##  11. Music Playback Flow
+## 9. Component Description
 
-When the driver selects **Play Music**, the command travels through the following components:
+| Component | Purpose |
+|---|---|
+| **Driver** | Provides touch or voice input to the system |
+| **Smartphone** | Represents an external smartphone and projection source |
+| **IVI HMI / Touch Display** | User interface through which the driver interacts with the IVI system |
+| **IVI Controller / Middleware** | Central component that receives commands and routes them to services |
+| **Media Service** | Handles media playback and audio operations |
+| **Navigation Service** | Handles navigation, routing, and location information |
+| **Projection Service** | Prepares navigation or other information for visual output |
+| **Audio HAL** | Represents the abstraction between media software and audio hardware |
+| **GPS Module** | Supplies location information to Navigation Service |
+| **Map Database** | Supplies stored map information for navigation |
+| **Display HAL** | Represents the abstraction between projection software and display hardware |
+| **Vehicle Speakers** | Final audio output |
+| **Central Display / HUD** | Final visual output |
+| **Vehicle Network (CAN/LIN)** | Represents communication between the IVI system and vehicle ECUs |
+| **Vehicle ECUs** | Provide conceptual vehicle information such as speed and gear |
+
+---
+
+## 10. Data Flow
+
+The important interfaces represented in the simulation include:
+
+- **Driver → IVI HMI** — User input / commands
+- **IVI HMI ↔ IVI Controller** — User commands and system responses
+- **Smartphone ↔ IVI HMI** — Smartphone interaction / projection
+- **IVI Controller → Media Service** — Media commands
+- **IVI Controller → Navigation Service** — Navigation commands
+- **IVI Controller → Projection Service** — Projection requests
+- **GPS Module → Navigation Service** — Location information
+- **Map Database → Navigation Service** — Map information
+- **Navigation Service → Projection Service** — Route information
+- **Media Service → Audio HAL** — Audio data
+- **Audio HAL → Vehicle Speakers** — Final audio output
+- **Projection Service → Display HAL** — Display content
+- **Display HAL → Central Display / HUD** — Final visual output
+- **IVI Controller ↔ Vehicle Network** — Vehicle information
+- **Vehicle Network ↔ Vehicle ECUs** — CAN/LIN communication
+
+The GPS Module and Map Database act as separate information sources for the Navigation Service.
+
+---
+
+## 11. Media Flow
+
+When the user selects **Play Music**, the signal follows:
 
 ```text
 Driver
@@ -332,64 +317,31 @@ Audio HAL
 Vehicle Speakers
 ```
 
-### Explanation
-
-1. The Driver sends a command through the HMI.
-2. The IVI HMI sends the command to the IVI Controller.
-3. The IVI Controller routes the request to the Media Service.
-4. The Media Service processes the media request.
-5. Audio data is passed to the Audio HAL.
-6. The Audio HAL sends the final audio output to the Vehicle Speakers.
+The Media Service handles the playback request and sends the resulting audio information through the Audio HAL to the vehicle speakers.
 
 ---
 
-##  12. Navigation Flow
+## 12. Navigation Flow
 
-When navigation starts, the **Navigation Service** uses location and map information.
-
-```text
-GPS Module ─────────┐
-                    │
-                    ▼
-             Navigation Service
-                    ▲
-                    │
-Map Database ───────┘
-```
-
-The complete user-command flow is:
+Navigation uses two important information sources:
 
 ```text
-Driver
-   ↓
-IVI HMI
-   ↓
-IVI Controller
-   ↓
-Navigation Service
-   ↑
-   ├──── GPS Module
-   │
-   └──── Map Database
+GPS Module ───────┐
+                  ↓
+            Navigation Service
+                  ↑
+Map Database ─────┘
 ```
 
-### GPS Module
+The GPS Module provides location information while the Map Database provides map information.
 
-Provides location information to the Navigation Service.
-
-### Map Database
-
-Provides stored map and routing information.
-
-### Navigation Service
-
-Combines location and map information to determine the route.
+The Navigation Service uses these inputs to represent route processing.
 
 ---
 
-##  13. Route Projection Flow
+## 13. Projection Flow
 
-Once navigation is active, the route can be projected onto the vehicle display.
+After navigation is active, route information can be sent to the display system.
 
 ```text
 Navigation Service
@@ -401,41 +353,15 @@ Display HAL
 Central Display / HUD
 ```
 
-The Projection Service prepares navigation information for visual output.
-
-The Display HAL represents the hardware abstraction layer responsible for transferring display content to the physical display or HUD.
+The Projection Service prepares the content and the Display HAL represents the interface to the physical visual output.
 
 ---
 
-##  14. Smartphone Integration
+## 14. Incoming Call Handling
 
-The Smartphone represents an external device that can interact with the IVI system.
+The project also demonstrates interaction between smartphone calls and media playback.
 
-Conceptually, it can represent technologies such as:
-
-- Android Auto
-- Apple CarPlay
-- Media streaming
-- Calls
-- Navigation projection
-
-Basic communication flow:
-
-```text
-Smartphone
-     ↕
-   IVI HMI
-     ↕
-IVI Controller
-```
-
----
-
-##  15. Incoming Call Flow
-
-The project demonstrates cross-feature interaction using an incoming call scenario.
-
-If music is currently playing and a call arrives:
+When a call arrives:
 
 ```text
 Smartphone
@@ -446,38 +372,18 @@ IVI Controller
      ↓
 Media Service
      ↓
-Pause Music
+Media Paused
 ```
 
-This demonstrates how one IVI feature can temporarily affect another feature.
-
----
-
-##  16. End Call and Media Resume
+If media was playing before the incoming call, the simulation can temporarily pause it.
 
 When the call ends, the system can restore the previous media state.
 
-```text
-Call Ends
-    ↓
-IVI Controller
-    ↓
-Media Service
-    ↓
-Audio HAL
-    ↓
-Vehicle Speakers
-    ↓
-Music Resumes
-```
-
-Media resumes only when it was previously paused because of the incoming call.
-
 ---
 
-##  17. Vehicle Data Flow
+## 15. Vehicle Data Flow
 
-The IVI Controller communicates conceptually with the vehicle through a CAN/LIN network.
+The conceptual vehicle communication path is:
 
 ```text
 IVI Controller
@@ -488,355 +394,125 @@ Vehicle Network
  Vehicle ECUs
 ```
 
-Vehicle ECUs can provide information such as:
-
-- Vehicle speed
-- Gear position
-- Ignition state
-- Other vehicle-state information
-
-The Vehicle Network represents the communication layer between the infotainment system and vehicle ECUs.
+This represents communication between the infotainment system and other electronic systems inside the vehicle.
 
 ---
 
-##  18. Live System State
+## 16. Live System State
 
-The simulation provides live information about the current system state.
+The simulation maintains the current state of important features such as:
 
-The state panel can represent information such as:
+- Media
+- Navigation
+- Projection
+- Call
+- GPS
+- Vehicle Network
+- Overall system mode
 
-- System Mode
-- Media State
-- Navigation State
-- Projection State
-- Call State
-- Vehicle Network State
-- GPS State
-
-For example:
-
-```text
-System Mode     : ACTIVE
-Media           : PLAYING
-Navigation      : ACTIVE
-Projection      : ACTIVE
-Call            : IDLE
-Vehicle Network : CONNECTED
-GPS             : AVAILABLE
-```
-
-This makes it easier to understand how different scenarios affect the overall IVI system.
+The state changes according to the scenario currently being executed.
 
 ---
 
-##  19. Event Journal
+## 17. Event Journal
 
-The application contains an **Event Journal** that records simulation events.
+The Event Journal records events generated during each simulation.
 
-Example:
+A typical flow may appear as:
 
 ```text
-Driver interaction detected
+Driver interaction
         ↓
-HMI received command
+HMI receives command
         ↓
-IVI Controller routed command
+IVI Controller routes request
         ↓
-Service received request
+Service processes request
         ↓
-Service processed data
-        ↓
-HAL processed output
+HAL processes output
         ↓
 Output generated
 ```
 
-The journal provides a step-by-step representation of the signal movement through the architecture.
+This makes the internal signal flow easier to follow during a demonstration.
 
 ---
 
-## 🧩 20. Component Description
+## 18. Key Concepts Demonstrated
 
-| Component | Description |
-|---|---|
-| **Driver** | Provides touch, voice, or user commands |
-| **Smartphone** | Represents an external smartphone and projection source |
-| **IVI HMI** | Driver-facing touchscreen and user interface |
-| **IVI Controller** | Central middleware and routing component |
-| **Media Service** | Handles media playback and audio-related operations |
-| **Navigation Service** | Handles navigation, routing and location information |
-| **Projection Service** | Prepares information for visual projection |
-| **Audio HAL** | Hardware abstraction layer between media software and audio hardware |
-| **Display HAL** | Hardware abstraction layer between software and display hardware |
-| **GPS Module** | Provides location information |
-| **Map Database** | Provides stored map and route information |
-| **Vehicle Speakers** | Final audio output |
-| **Central Display / HUD** | Final visual output |
-| **Vehicle Network** | Represents CAN/LIN vehicle communication |
-| **Vehicle ECUs** | Electronic control units providing vehicle-state information |
+The project demonstrates the following concepts:
 
----
-
-##  21. Complete Data Flow
-
-Important interfaces represented in the architecture include:
-
-```text
-Driver → IVI HMI
-
-Smartphone ↔ IVI HMI
-
-IVI HMI ↔ IVI Controller
-
-IVI Controller → Media Service
-
-IVI Controller → Navigation Service
-
-IVI Controller → Projection Service
-
-GPS Module → Navigation Service
-
-Map Database → Navigation Service
-
-Navigation Service → Projection Service
-
-Media Service → Audio HAL
-
-Audio HAL → Vehicle Speakers
-
-Projection Service → Display HAL
-
-Display HAL → Central Display / HUD
-
-IVI Controller ↔ Vehicle Network
-
-Vehicle Network ↔ Vehicle ECUs
-```
+- In-Vehicle Infotainment architecture
+- Human Machine Interface (HMI)
+- Middleware and command routing
+- Media services
+- Navigation services
+- Projection services
+- Hardware Abstraction Layer (HAL)
+- GPS and map information
+- Vehicle network communication
+- CAN/LIN concepts
+- ECU interaction
+- State management
+- Event-driven programming
+- Interactive signal-flow visualization
 
 ---
 
-##  22. Overall System Flow
+## 19. Limitations
 
-The complete conceptual flow can be summarized as:
-
-```text
-INPUT
-  ↓
-Driver / Smartphone
-  ↓
-INTERFACE
-  ↓
-IVI HMI
-  ↓
-CONTROL
-  ↓
-IVI Controller
-  ↓
-SERVICE LAYER
-  ↓
-Media / Navigation / Projection
-  ↓
-HARDWARE ABSTRACTION
-  ↓
-Audio HAL / Display HAL
-  ↓
-OUTPUT
-  ↓
-Vehicle Speakers / Display / HUD
-```
-
----
-
-##  23. Key Concepts Demonstrated
-
-This project demonstrates several important automotive software concepts:
-
-### Human Machine Interface (HMI)
-
-Provides the interaction point between the driver and the infotainment system.
-
-### Middleware
-
-The IVI Controller acts as the central communication layer.
-
-### Service-Oriented Architecture
-
-Media, Navigation and Projection are represented as separate services.
-
-### Hardware Abstraction Layer
-
-Audio HAL and Display HAL provide abstraction between software services and physical outputs.
-
-### Vehicle Communication
-
-CAN/LIN communication is conceptually represented through the Vehicle Network.
-
-### State Management
-
-The simulator maintains system states such as media, navigation, projection and call activity.
-
-### Event-Driven Programming
-
-User actions trigger scenarios that update the application state and architecture visualization.
-
----
-
-##  24. How to Demonstrate the Project
-
-A simple demonstration sequence can be:
-
-### Step 1 — Open the Simulator
-
-Open `index.html` in the browser.
-
-Explain the main architecture components.
-
-### Step 2 — Explain the Main Flow
-
-Explain:
-
-```text
-Driver → HMI → Controller → Service → HAL → Output
-```
-
-### Step 3 — Play Music
-
-Select **Play Music**.
-
-Explain:
-
-```text
-Driver → HMI → Controller → Media → Audio HAL → Speakers
-```
-
-### Step 4 — Start Navigation
-
-Select **Start Navigation**.
-
-Explain how the Navigation Service receives information from:
-
-```text
-GPS Module + Map Database
-```
-
-### Step 5 — Project Route
-
-Select **Project Route**.
-
-Explain:
-
-```text
-Navigation → Projection → Display HAL → HUD
-```
-
-### Step 6 — Incoming Call
-
-While music is active, trigger **Incoming Call**.
-
-Explain how the system temporarily pauses media.
-
-### Step 7 — End Call
-
-End the call and demonstrate how the previous media state can be restored.
-
-### Step 8 — Reset
-
-Use the reset option to return the system to its initial state.
-
----
-
-##  25. Limitations
-
-This project is a **conceptual and educational simulation**.
+This is a **conceptual and educational simulation only**.
 
 It does not implement a production automotive infotainment platform.
 
-The project does not contain:
+Specifically:
 
-- Real CAN bus communication
-- Real LIN communication
-- Real vehicle ECUs
-- Real GPS hardware
-- Production Audio HAL
-- Production Display HAL
-- Actual Android Automotive OS
-- Actual Android Auto connection
-- Actual Apple CarPlay connection
-- Real vehicle sensor communication
-
-The GPS, CAN/LIN, ECU, HAL, smartphone, system states, timestamps, and events shown in the application are simulated for educational demonstration.
+- No real CAN bus is connected.
+- No real LIN network is connected.
+- GPS information is simulated.
+- Vehicle ECU communication is simulated.
+- Audio HAL is represented conceptually.
+- Display HAL is represented conceptually.
+- No actual Android Automotive OS is implemented.
+- No actual Android Auto or Apple CarPlay connection is established.
+- Vehicle data and simulation events are generated for demonstration purposes.
 
 ---
 
-##  26. Future Scope
+## 20. Future Scope
 
-The project can be extended with:
+Possible future improvements include:
 
-- Real-time CAN data simulation
-- OBD-II adapter integration
-- Real vehicle sensor information
-- Real GPS integration
-- Voice command functionality
+- Integration with real Android Automotive concepts
+- Real CAN bus interface
+- OBD-II integration
+- Real GPS data
+- Voice-control functionality
 - Climate-control simulation
-- Additional ECU interaction
-- Android Automotive integration concepts
-- Real-time route visualization
-- Advanced diagnostic information
-- Dark/light theme selection
+- Additional vehicle ECU interaction
+- Real vehicle sensor information
+- Advanced system diagnostics
 - Additional IVI scenarios
-- Hardware-in-the-loop (HIL) testing
-- Raspberry Pi touchscreen prototype
+- Hardware-in-the-loop testing
+- Raspberry Pi based touchscreen prototype
 
 ---
 
-##  27. Educational Purpose
+## 21. Educational Purpose
 
-The **IVI Simulation System** was developed for educational and demonstration purposes.
+This project is designed for educational and demonstration purposes.
 
-It can help students understand:
+It can be used to understand:
 
-- Automotive software architecture
-- In-Vehicle Infotainment systems
+- Automotive infotainment architecture
+- Software component interaction
 - Signal and data flow
-- Service communication
-- HMI interaction
+- HMI communication
+- Service-based architecture
 - Hardware abstraction
-- Vehicle networking
-- CAN/LIN concepts
-- ECU communication
-- Interactive web-based system simulation
-
----
-
-##  28. Project Documentation
-
-Additional project documentation can be stored inside the `docs` directory.
-
-### Architecture Diagram
-
-[View Architecture Diagram](docs/architecture.png)
-
-### Project Report
-
-[View Project Report](docs/IVI_Project_Report_Lopamudra_Roy.pdf)
-
----
-
-##  29. Clone Repository
-
-Use the following command to clone the project:
-
-```bash
-git clone https://github.com/lopa2004/IVI-SIMULATION-SYSTEM.git
-```
-
-Repository:
-
-**IVI-SIMULATION-SYSTEM**
+- Vehicle network concepts
+- Interactive automotive system simulation
 
 ---
 
 
-
-
- 
